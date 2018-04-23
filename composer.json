@@ -1,0 +1,19 @@
+{
+    "name": "graychen/yii2-jd-deposit",
+    "description": "a yii2-extendes for jd-deposit",
+    "type": "library",
+    "require-dev": {
+        "phpunit/phpunit": "^7.1"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "陈家辉",
+            "email": "chenjiahui@haolianluo.com"
+        }
+    ],
+    "minimum-stability": "beta",
+    "require": {
+        "yiisoft/yii2": "2.0.15.1"
+    }
+}
