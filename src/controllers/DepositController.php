@@ -1,9 +1,9 @@
 <?php
 
-namespace graychen\jd\deposit\controllers;
+namespace graychen\yii2\jd\deposit\controllers;
 
-use graychen\jd\deposit\components\JdVerifyController;
-use graychen\jd\deposit\models\OrderDeposit;
+use graychen\yii2\jd\deposit\components\JdVerifyController;
+use graychen\yii2\jd\deposit\models\OrderDeposit;
 use Yii;
 use yii\web\NotFoundHttpException;
 
@@ -31,7 +31,7 @@ class DepositController extends JdVerifyController
         $params = Yii::$app->request->getBodyParams();
         $arrayData = json_decode(base64_decode($params['data']), true);
         $orderId = $arrayData['orderId'];
-        if (($order = OrderDeposit::findOne(['sn' => \common\models\OrderDeposit::SOURCE_JD . $orderId])) == null) {
+        if (($order = OrderDeposit::findOne(['sn' => OrderDeposit::SOURCE_JD . $orderId])) == null) {
             throw new NotFoundHttpException('订单不存在');
         }
         $data = [];

@@ -27,15 +27,12 @@ class TestCase extends BaseTestCase
             'id' => 'testapp',
             'basePath' => __DIR__,
             'vendorPath' => $this->getVendorPath(),
-            'bootstrap' => [
-                'deposit'
-            ],
             'components' => [
                 'db' => [
                     'class' => 'yii\db\Connection',
                     'dsn' => 'mysql:host=localhost:3306;dbname=test',
                     'username' => 'root',
-                    'password' => '',
+                    'password' => '206065',
                     'tablePrefix' => 'tb_'
                 ],
                 'i18n' => [
@@ -78,6 +75,31 @@ class TestCase extends BaseTestCase
     }
     protected function createTestDbData()
     {
-        Yii::$app->runAction('/migrate/up', ['migrationPath' => '@migrate']);
+        //Yii::$app->runAction('/migrate', ['migrationPath' => '@migrate']);
+        $db = Yii::$app->getDb();
+        try {
+            $db->createCommand()->createTable('tb_order', [
+                'id' => 'pk',
+                'sn' => "int(11) not null",
+                'game_id' => "int(11) not null",
+                'type' => "smallint(6) not null",
+                'user_id' => "int(100) not null",
+                'final_price' => "float(100) not null",
+                'equipment' => "string(100) not null",
+                'serverinfo' => "string(100) not null",
+                'account' => "string(100) not null",
+                'password' => "string(100) not null",
+                'remark' => "string(100) not null",
+                'status' => "smallint(6) not null",
+                'created_at' => "datetime",
+                'updated_at' => "datetime",
+                'payment_method' => "smallint(6) not null",
+                'client_id' => "string(100) not null",
+                'name' => "string(100) not null",
+                'description' => "string(100) not null",
+            ])->execute();
+        } catch (Exception $e) {
+            return;
+        }
     }
 }

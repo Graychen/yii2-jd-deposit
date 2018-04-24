@@ -1,6 +1,6 @@
 <?php
 
-namespace api\modules\jd\v1\filters;
+namespace graychen\yii2\jd\deposit\filters;
 
 use common\models\User;
 use yii\filters\auth\AuthMethod;

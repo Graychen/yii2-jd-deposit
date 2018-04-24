@@ -1,6 +1,6 @@
 <?php
 
-namespace common\models;
+namespace graychen\yii2\jd\deposit\models;
 
 use yii\behaviors\TimestampBehavior;
 
