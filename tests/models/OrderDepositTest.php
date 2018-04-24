@@ -1,7 +1,7 @@
 <?php
 namespace graychen\yii2\jd\deposit\tests\models;
 
-use graychen\yii2\jd\deposit\models\OrderDeposit;
+use graychen\yii2\jd\deposit\models\Order;
 use graychen\yii2\jd\deposit\tests\TestCase;
 use yii;
 
@@ -11,7 +11,7 @@ class OrderDepositTest extends TestCase
     protected function setUp()
     {
         parent::setUp();
-        $this->model=new OrderDeposit();
+        $this->model=new Order();
     }
     protected function tearDown()
     {

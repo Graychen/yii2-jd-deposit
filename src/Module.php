@@ -1,6 +1,6 @@
 <?php
 
-namespace api\modules\jd;
+namespace graychen\yii2\jd\deposit;
 
 use yii;
 use yii\web\Response;
