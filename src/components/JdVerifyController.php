@@ -1,8 +1,8 @@
 <?php
 
-namespace api\modules\jd\v1\components;
+namespace graychen\yii2\jd\deposit\components;
 
-use api\modules\jd\v1\filters\JdSignAuth;
+use graychen\yii2\modules\jd\deposit\filters\JdSignAuth;
 use yii\rest\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\RateLimiter;
