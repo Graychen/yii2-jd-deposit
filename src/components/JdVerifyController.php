@@ -1,6 +1,6 @@
 <?php
 
-namespace api\modules\jd\v1\components;
+namespace graychen\jd\deposit\components;
 
 use api\modules\jd\v1\filters\JdSignAuth;
 use yii\rest\Controller;

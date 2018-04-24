@@ -1,5 +1,5 @@
 <?php
-namespace graychen\yii2\queue\backend\tests;
+namespace graychen\yii2\jd\deposit\tests;
 use Yii;
 use PHPUnit\Framework\TestCase as BaseTestCase;
 use yii\base\Exception;
@@ -28,7 +28,7 @@ class TestCase extends BaseTestCase
             'basePath' => __DIR__,
             'vendorPath' => $this->getVendorPath(),
             'bootstrap' => [
-                'queue'
+                'deposit'
             ],
             'components' => [
                 'db' => [
@@ -74,7 +74,7 @@ class TestCase extends BaseTestCase
     protected function destroyTestDbData()
     {
         $db = Yii::$app->getDb();
-        $db->createCommand()->dropTable('tb_queue')->execute();
+        $db->createCommand()->dropTable('tb_order')->execute();
     }
     protected function createTestDbData()
     {
