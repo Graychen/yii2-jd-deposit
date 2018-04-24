@@ -1,47 +1,126 @@
 <?php
 
-namespace graychen\yii2\jd\deposit\controllers;
+namespace backend\controllers;
 
-use graychen\yii2\jd\deposit\components\JdVerifyController;
-use graychen\yii2\jd\deposit\models\OrderDeposit;
 use Yii;
+use common\models\OrderDeposit;
+use common\models\Order;
+use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\filters\VerbFilter;
+use backend\models\SearchDeposit;
+use GuzzleHttp\Client;
 
-class DepositController extends JdVerifyController
+/**
+ * OrderController implements the CRUD actions for Order model.
+ */
+class DepositController extends Controller
 {
     /**
-     * 京东订单推送
+     * @inheritdoc
      */
-    public function actionCreate()
+    public function behaviors()
     {
-        $model = new OrderDeposit();
-        if ($model->load(Yii::$app->request->getBodyParams(), '') && $model->validate() && $model->save()) {
-            Yii::$app->response->setStatusCode(201);
-        } elseif (!$model->hasErrors()) {
-            throw new yii\web\ServerErrorHttpException('Failed to create the object for unknown reason.');
+        return [
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'delete' => ['POST'],
+                ],
+            ],
+        ];
+    }
+
+    public function actionGame()
+    {
+        $params = Yii::$app->request->getBodyParams();
+        $client = new Client();
+        $data = base64_encode(json_encode(['orderId' =>$params['orderId'],'orderStatus'=>$params['orderStatus']]));
+        $allData = [
+            'customerId' => getenv('JINDONG_API_CUSTOMERID'),
+            'timestamp'=>date("YmdHis"),
+            'sign'=>$this->createSign($data),
+            'data'=>$data
+        ];
+        $res = $client->request('POST', 'http://card.jd.com/api/gameApi.action', $allData);
+        $body=$res->getBody();
+        $arrBody=json_decode($body, true);
+        if ($arrBody['retCode']==100) {
+            $orderDeposit=OrderDeposit::find()->where(['sn'=>'JD'.$params['orderId']])->one();
+            $orderDeposit->status=$params['orderStatus'];
+            $orderDeposit->save();
         }
-        return $model;
+        return $body;
     }
 
     /**
-     * 查询京东订单状态
+     * 生成签名验证串sign
+     * @param array $params post或get请求的请求参数数组
+     * @return string sign签名验证串
      */
-    public function actionStatus()
+    public function createSign($params)
     {
-        $params = Yii::$app->request->getBodyParams();
-        $arrayData = json_decode(base64_decode($params['data']), true);
-        $orderId = $arrayData['orderId'];
-        if (($order = OrderDeposit::findOne(['sn' => OrderDeposit::SOURCE_JD . $orderId])) == null) {
-            throw new NotFoundHttpException('订单不存在');
-        }
-        $data = [];
-        if ($order->status > 2) {
-            $data['orderStatus'] = 0;
-        } elseif ($order->status > -1) {
-            $data['orderStatus'] = 1;
+        $data = $params;
+        $signStr="customerId=".getenv('JINDONG_API_CUSTOMERID')."&data=".$data."&timestamp=".date("YmdHis")."&".getenv('JINDONG_API_PRIVATEKEY');
+        $sign = md5($signStr);
+        return $sign;
+    }
+
+    /**
+     * Lists all Order models.
+     * @return mixed
+     */
+    public function actionIndex()
+    {
+        $searchModel = new SearchDeposit();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $total=Order::getOrderTotal();
+
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+            'total'=>$total
+        ]);
+    }
+
+    /**
+     * Displays a single Order model.
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionView($id)
+    {
+        return $this->render('view', [
+            'model' => $this->findModel($id),
+        ]);
+    }
+
+    /**
+     * Deletes an existing Order model.
+     * If deletion is successful, the browser will be redirected to the 'index' page.
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionDelete($id)
+    {
+        $this->findModel($id)->delete();
+
+        return $this->redirect(['index']);
+    }
+
+    /**
+     * Finds the Order model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param integer $id
+     * @return Order the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findModel($id)
+    {
+        if (($model = Order::findOne($id)) !== null) {
+            return $model;
         } else {
-            $data['orderStatus'] = 2;
+            throw new NotFoundHttpException('The requested page does not exist.');
         }
-        return $data;
     }
 }
