@@ -33,7 +33,11 @@ class Order extends \yii\db\ActiveRecord
      */
     public function rules()
     {
-        return [];
+        return [
+            [['id', 'game_id', 'type', 'beauty', 'user_id','hours', 'equipment', 'status', 'created_at', 'updated_at', 'payment_method'], 'integer'],
+            [['sn',  'serverinfo', 'account', 'password', 'remark', 'client_id', 'name', 'description'], 'safe'],
+            [['count', 'final_price'], 'number'],
+        ];
     }
 
     /**
@@ -85,4 +89,44 @@ class Order extends \yii\db\ActiveRecord
             self::STATUS_FAILURE => '充值失败',
         ];
     }
+
+    /**
+     * 京东Skuid对照表
+     */
+    public static function skuidList()
+    {
+        return [
+            '21064017372' => [
+                'game_id' => 2,
+                'type' => self::TYPE_PEIWAN_YANZHI,
+                'name' => '吃鸡陪玩绝地求生大逃杀全军出击刺激战场荒野行动光荣使命双排吃鸡实力带躺',
+            ],
+            '19025625428' => [
+                'game_id' => 1,
+                'type' => self::TYPE_SHANGFEN_PEILIAN,
+                'name' => '王者荣耀陪练排位大神陪玩包带上分上星代练代打双排匹配熟练度升级成就赏金冒险连胜'
+            ],
+            '19027152924' => [
+                'game_id' => 1,
+                'type' => self::TYPE_SHANGFEN_PEILIAN,
+                'name' => '王者荣耀大神陪练美女陪玩双排排位匹配熟练度升级成就赏金冒险连胜'
+            ],
+            '19087622210' => [
+                'game_id' => 1,
+                'type' => self::TYPE_SHANGFEN_PEILIAN,
+                'name' => '王者荣耀代练上星代打上分上段美女陪玩大神陪练排位匹配熟练度成就升级赏金冒险连胜'
+            ],
+            '19148161614' => [
+                'game_id' => 1,
+                'type' => self::TYPE_SHANGFEN_PEILIAN,
+                'name' => '补差价单 王者荣耀代打代练大神陪练美女陪玩双排匹配成就熟练度升级赏金冒险'
+            ],
+            '25219449932' => [
+                'game_id' => 1,
+                'type' => self::TYPE_PEIWAN_YANZHI,
+                'name' => 'QQ飞车手游qq飞车代抽永久A车黑夜传说大神代练美女陪玩代刷成就剧情等级经验金币'
+            ]
+        ];
+    }
+
 }
