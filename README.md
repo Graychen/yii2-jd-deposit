@@ -7,7 +7,7 @@
 [![Build Status](https://scrutinizer-ci.com/g/Graychen/yii2-jd-deposit/badges/build.png?b=master)](https://scrutinizer-ci.com/g/Graychen/yii2-jd-deposit/build-status/master)
 [![StyleCI](https://styleci.io/repos/109097207/shield?branch=master)](https://styleci.io/repos/109097207)
 
-This is a background for yii-queue, there are queue statistics, temporary support redis driver
+this is a composer-extends for jd game(这是一个和京东游戏充值对接的模块)
 # Migrate database
 
 ## To add a lookup table to your database, following is the sql for lookup:
@@ -59,4 +59,4 @@ class jdController extends Controller
 ## View
 ### after that,you can website `https://localhost/admin/deposit/default`
 ## ChangeLog
-[changelog](https://github.com/Graychen/yii2-queue-backend/blob/master/CHANGELOG.md)
+[changelog](https://github.com/Graychen/yii2-jd-deposit/blob/master/CHANGELOG.md)
