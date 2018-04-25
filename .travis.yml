@@ -1,7 +1,6 @@
 language: php
 
 php:
-  - 5.6
   - 7.1
 
 # faster builds on new travis setup not using sudo
@@ -15,7 +14,6 @@ cache:
 
 services:
   - mysql
-  - redis-server
 
 before_install:
   - mysql -e 'CREATE DATABASE IF NOT EXISTS test;'
@@ -24,7 +22,6 @@ install:
   - travis_retry composer self-update
   - composer config -g github-oauth.github.com dcb6b0049723eb6f56039b2d6389ac76eb29e352
   - travis_retry composer install --prefer-dist --no-interaction
-#  - travis_retry sudo apt-get install redis-server
 
 before_script:
   - travis_retry composer self-update
