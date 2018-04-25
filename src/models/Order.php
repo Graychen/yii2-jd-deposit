@@ -20,6 +20,24 @@ class Order extends \yii\db\ActiveRecord
     const STATUS_RECHARGE=1;
     const STATUS_FAILURE=2;
 
+    const TYPE_PEIWAN_PUTONG = 1; //普通陪玩
+    const TYPE_PEIWAN_YANZHI = 2; //颜值陪玩
+    const TYPE_SHANGFEN_PEILIAN = 3; //陪练上分
+    const TYPE_SHANGFEN_DAIDA = 4; //代打上分
+
+    const STATUS_REFUNDING = -5; //退款中
+    const STATUS_REFUND_FAILED = -4; //退款失败
+    const STATUS_REFUNDED = -3; //已退款
+    const STATUS_PAY_FAILED = -2; //支付失败
+    const STATUS_UNPAID = -1; //未支付
+    const STATUS_PAID = 0; //未派单, 已支付
+    const STATUS_IN_DISPATCH = 1; //正在派单
+    const STATUS_IN_SERVICE = 2; //服务中
+    const STATUS_APPLY_COMPLETED = 3; //申请完成
+    const STATUS_FINISHED = 4; //已完成
+    const STATUS_CLOSED = 5; //已关闭
+
+
     /**
      * @inheritdoc
      */
@@ -34,7 +52,7 @@ class Order extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id', 'game_id', 'type', 'beauty', 'user_id','hours', 'equipment', 'status', 'created_at', 'updated_at', 'payment_method'], 'integer'],
+            [['id', 'game_id', 'type','user_id','hours', 'equipment', 'status', 'created_at', 'updated_at', 'payment_method'], 'integer'],
             [['sn',  'serverinfo', 'account', 'password', 'remark', 'client_id', 'name', 'description'], 'safe'],
             [['count', 'final_price'], 'number'],
         ];
@@ -63,6 +81,7 @@ class Order extends \yii\db\ActiveRecord
             'game_id' => '游戏ID',
             'type' => '订单分类',
             'user_id' => '用户ID',
+            'count' =>'陪玩局数/时长',
             'final_price' => '价格',
             'equipment' => '区服信息',
             'serverinfo' => '详细区服信息',

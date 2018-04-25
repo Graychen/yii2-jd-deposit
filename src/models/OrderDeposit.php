@@ -68,14 +68,14 @@ class OrderDeposit extends Model
         /* @var $order Order */
         $order = new Order();
         $order->sn = Order::SOURCE_JD . $this->orderId;
-        $order->name = DataPack::skuidList()[$this->skuId]['name'] ?? '京东订单';
+        $order->name = Order::skuidList()[$this->skuId]['name'] ?? '京东订单';
         $order->count = $this->buyNum;
         $order->final_price = $this->totalPrice;
         $order->account = $this->gameAccount;
         $order->remark = $this->raw;
-        $order->game_id = DataPack::skuidList()[$this->skuId]['game_id'] ?? 1;
+        $order->game_id = Order::skuidList()[$this->skuId]['game_id'] ?? 1;
         $order->hours = 1;
-        $order->type = DataPack::skuidList()[$this->skuId]['type'] ?? Order::TYPE_PEIWAN_PUTONG;
+        $order->type = Order::skuidList()[$this->skuId]['type'] ?? Order::TYPE_PEIWAN_PUTONG;
         $order->start_time = date('Y-m-d H:i');
         $order->end_time = date('Y-m-d H:i', strtotime($order->start_time) + 3600);
         $order->equipment = $this->equipment;
