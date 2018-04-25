@@ -25,4 +25,5 @@ class StatusAction extends JdVerifyAction
         }
         return $data;
     }
+
 }

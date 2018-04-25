@@ -20,4 +20,5 @@ class CreateAction extends JdVerifyAction
         }
         return $model;
     }
+
 }

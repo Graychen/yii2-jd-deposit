@@ -81,4 +81,5 @@ class OrderDepositTest extends TestCase
         $this->assertTrue($model->save());
     }
 
+    
 }

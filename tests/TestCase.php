@@ -1,9 +1,11 @@
 <?php
 namespace graychen\yii2\jd\deposit\tests;
+
 use Yii;
 use PHPUnit\Framework\TestCase as BaseTestCase;
 use yii\base\Exception;
 use yii\helpers\ArrayHelper;
+
 /**
  * This is the base class for all yii framework unit tests.
  */
