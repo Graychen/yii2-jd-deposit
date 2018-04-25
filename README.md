@@ -23,7 +23,7 @@ Config Module in components part
     ]
 
 Use Actions
-
+```
 class jdController extends Controller
 {
     public function actions()
@@ -38,6 +38,7 @@ class jdController extends Controller
         ];
     }
 }
+```
 ## backend
 ### Config -> main.php 
 ```
