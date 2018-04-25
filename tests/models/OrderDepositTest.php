@@ -79,7 +79,6 @@ class OrderDepositTest extends TestCase
         $model->totalPrice = 100;
         $this->assertTrue($model->validate());
         $this->assertTrue($model->save());
-        $model->getErrors();
     }
 
 }

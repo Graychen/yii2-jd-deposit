@@ -90,17 +90,16 @@ class TestCase extends BaseTestCase
                 'equipment' => "string(100) not null",
                 'serverinfo' => "string(100) not null",
                 'account' => "string(100) not null",
-                'password' => "string(100) not null",
-                'remark' => "string(100) not null",
+                'remark' => "string(100)",
                 'status' => "smallint(6) not null",
-                'created_at' => "datetime",
-                'updated_at' => "datetime",
+                'created_at' => "int(100) not null",
+                'updated_at' => "int(100) not null",
                 'start_time' => "datetime",
                 'end_time' => "datetime",
                 'payment_method' => "smallint(6) not null",
-                'client_id' => "string(100) not null",
-                'name' => "string(100) not null",
-                'description' => "string(100) not null",
+                //'client_id' => "string(100) not null",
+                'name' => "string(255) not null",
+                //'description' => "string(100) not null",
             ])->execute();
         } catch (Exception $e) {
             return;

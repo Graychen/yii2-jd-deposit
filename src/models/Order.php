@@ -52,9 +52,9 @@ class Order extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id', 'game_id', 'type','user_id','hours', 'equipment', 'status', 'created_at', 'updated_at', 'payment_method'], 'integer'],
-            [['sn',  'serverinfo', 'account', 'password', 'remark', 'client_id', 'name', 'description'], 'safe'],
-            [['count', 'final_price'], 'number'],
+           // [['id', 'game_id', 'type','user_id','hours', 'equipment', 'status', 'created_at', 'updated_at', 'payment_method'], 'integer'],
+           // [['sn',  'serverinfo', 'account', 'password', 'remark', 'client_id', 'name', 'description'], 'safe'],
+           // [['count', 'final_price'], 'number'],
         ];
     }
 
