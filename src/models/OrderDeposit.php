@@ -2,8 +2,6 @@
 
 namespace graychen\yii2\jd\deposit\models;
 
-use common\helpers\utils\DataPack;
-
 use Yii;
 use yii\base\Model;
 use yii\behaviors\TimestampBehavior;
@@ -86,5 +84,4 @@ class OrderDeposit extends Model
         $order->payment_method = Order::PAYMENT_METHOD_JD;
         return $order->save();
     }
-
 }

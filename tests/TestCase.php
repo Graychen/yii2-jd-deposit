@@ -1,9 +1,11 @@
 <?php
 namespace graychen\yii2\jd\deposit\tests;
+
 use Yii;
 use PHPUnit\Framework\TestCase as BaseTestCase;
 use yii\base\Exception;
 use yii\helpers\ArrayHelper;
+
 /**
  * This is the base class for all yii framework unit tests.
  */
@@ -32,7 +34,7 @@ class TestCase extends BaseTestCase
                     'class' => 'yii\db\Connection',
                     'dsn' => 'mysql:host=localhost:3306;dbname=test',
                     'username' => 'root',
-                    'password' => '206065',
+                    'password' => '',
                     'tablePrefix' => 'tb_'
                 ],
                 'i18n' => [
