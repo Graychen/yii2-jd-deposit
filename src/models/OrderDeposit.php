@@ -3,7 +3,7 @@
 namespace graychen\yii2\jd\deposit\models;
 
 use common\helpers\utils\DataPack;
-use common\models\Order;
+
 use Yii;
 use yii\base\Model;
 use yii\behaviors\TimestampBehavior;
@@ -14,10 +14,6 @@ use yii\web\ConflictHttpException;
  */
 class OrderDeposit extends Model
 {
-    public $data;//数据
-    public $customerId;//店铺id
-    public $sign;//签名
-    public $timestamp;//当前时间戳
     public $orderId;//京东订单号
     public $buyNum;//购买数量
     public $skuId; //对应京东的商品 skuId
@@ -26,11 +22,9 @@ class OrderDeposit extends Model
     public $totalPrice; //订单总价
     public $gameAccount; //游戏账号
     public $permit; //通行证
-    public $gameAccountType; //账号类型
-    public $chargeType;//充值类型
-    public $gameArea; //游戏区
-    public $gameServer; //游戏所在服
-    public $features; //json格式字符串
+    public $raw;
+    public $equipment;
+    public $serverinfo;
 
     /**
      * @inheritdoc
@@ -43,7 +37,14 @@ class OrderDeposit extends Model
     public function rules()
     {
         return [
-            [['data'], 'required']
+            [['orderId', 'buyNum', 'skuId', 'brandId', 'userIp', 'totalPrice', 'gameAccount'], 'required'],
+            [['orderId', 'brandId', 'skuId'], 'integer'],
+            [['orderId', 'skuId'], 'match', 'pattern' => '/^\d{11,}$/'],
+            ['buyNum', 'integer', 'min' => 1, 'max' => 200],
+            ['userIp', 'ip'],
+            ['totalPrice', 'double'],
+            [['gameAccount', 'equipment', 'serverinfo', 'permit'], 'string'],
+            ['raw', 'safe'],
         ];
     }
 
@@ -61,29 +62,29 @@ class OrderDeposit extends Model
 
     public function save()
     {
-        $data = json_decode(base64_decode($this->data), true);
-        if (Order::find()->where(['sn' => Order::SOURCE_JD . $data['orderId']])->exists()) {
+        if (Order::find()->where(['sn' => Order::SOURCE_JD . $this->orderId])->exists()) {
             throw new ConflictHttpException('订单号已存在');
         }
         /* @var $order Order */
-        $order = new \common\models\OrderDeposit();
-        $order->sn = $order::SOURCE_JD . $data['orderId'];
-        $order->name = DataPack::skuidList()[$data['skuId']]['name'] ?? '京东订单';
-        $order->count = $data['buyNum'];
-        $order->final_price = $data['totalPrice'];
-        $order->account = $data['gameAccount'];
-        $order->remark = json_encode($data);
-        $order->game_id = DataPack::skuidList()[$data['skuId']]['game_id'] ?? 1;
+        $order = new Order();
+        $order->sn = Order::SOURCE_JD . $this->orderId;
+        $order->name = Order::skuidList()[$this->skuId]['name'] ?? '京东订单';
+        $order->count = $this->buyNum;
+        $order->final_price = $this->totalPrice;
+        $order->account = $this->gameAccount;
+        $order->remark = $this->raw;
+        $order->game_id = Order::skuidList()[$this->skuId]['game_id'] ?? 1;
         $order->hours = 1;
-        $order->type = DataPack::skuidList()[$data['skuId']]['type'] ?? Order::TYPE_PEIWAN_PUTONG;
+        $order->type = Order::skuidList()[$this->skuId]['type'] ?? Order::TYPE_PEIWAN_PUTONG;
         $order->start_time = date('Y-m-d H:i');
         $order->end_time = date('Y-m-d H:i', strtotime($order->start_time) + 3600);
-        $order->equipment = $data['gameArea']['name'];
-        $order->serverinfo = $data['gameServer']['name'];
+        $order->equipment = $this->equipment;
+        $order->serverinfo = $this->serverinfo;
         $order->user_id = 1;
         $order->status = Order::STATUS_PAID;
         $order->source = $order::SOURCE_JD;
         $order->payment_method = Order::PAYMENT_METHOD_JD;
         return $order->save();
     }
+
 }
