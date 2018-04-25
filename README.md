@@ -59,4 +59,4 @@ class jdController extends Controller
 ## View
 ### after that,you can website `https://localhost/admin/deposit/default`
 ## ChangeLog
-[changelog](https://github.com/Graychen/yii2-queue-backend/blob/master/CHANGELOG.md)
+[changelog](https://github.com/Graychen/yii2-jd-deposit/blob/master/CHANGELOG.md)
