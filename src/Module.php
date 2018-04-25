@@ -1,6 +1,6 @@
 <?php
 
-namespace api\modules\jd;
+namespace graychen\yii2\jd\deposit;
 
 use yii;
 use yii\web\Response;
@@ -27,5 +27,17 @@ class Module extends \yii\base\Module
             Yii::$app->response->headers->add('x-debug-tag', $tag);
             Yii::$app->response->headers->add('x-debug-url', $url);
         }
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        Yii::$app->response->headers->add('x-author', 'lianluo.com');
+        if (YII_DEBUG) {
+            Yii::$app->response->headers->add('x-debug-tag', Yii::$app->log->targets['debug']->tag);
+        }
+        Yii::$app->user->enableSession = false;
+        Yii::$app->user->loginUrl = null;
+        Yii::$app->request->parsers = [
+            'application/json' => 'yii\web\JsonParser',
+        ];
+        //在API接口模块执行严格URL检查
+        Yii::$app->urlManager->enableStrictParsing = true;
     }
 }

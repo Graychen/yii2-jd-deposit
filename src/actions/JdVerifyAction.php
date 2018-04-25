@@ -1,13 +1,12 @@
 <?php
+namespace graychen\yii2\jd\deposit\actions;
 
-namespace api\modules\jd\v1\components;
-
-use api\modules\jd\v1\filters\JdSignAuth;
-use yii\rest\Controller;
+use graychen\yii2\jd\deposit\filters\JdSignAuth;
 use yii\filters\VerbFilter;
 use yii\filters\RateLimiter;
+use yii\base\Action;
 
-class JdVerifyController extends Controller
+class JdVerifyAction extends action
 {
     public function behaviors()
     {

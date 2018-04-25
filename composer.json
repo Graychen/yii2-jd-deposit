@@ -13,7 +13,19 @@
         }
     ],
     "minimum-stability": "beta",
+    "autoload": {
+        "psr-4": {
+            "graychen\\yii2\\jd\\deposit\\": "src",
+            "graychen\\yii2\\jd\\deposit\\tests\\": "tests"
+        }
+    },
     "require": {
         "yiisoft/yii2": "2.0.15.1"
-    }
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://asset-packagist.org"
+        }
+    ]
 }

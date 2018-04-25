@@ -1,9 +1,11 @@
 <?php
-namespace graychen\yii2\queue\backend\tests;
+namespace graychen\yii2\jd\deposit\tests;
+
 use Yii;
 use PHPUnit\Framework\TestCase as BaseTestCase;
 use yii\base\Exception;
 use yii\helpers\ArrayHelper;
+
 /**
  * This is the base class for all yii framework unit tests.
  */
@@ -27,9 +29,6 @@ class TestCase extends BaseTestCase
             'id' => 'testapp',
             'basePath' => __DIR__,
             'vendorPath' => $this->getVendorPath(),
-            'bootstrap' => [
-                'queue'
-            ],
             'components' => [
                 'db' => [
                     'class' => 'yii\db\Connection',
@@ -74,10 +73,38 @@ class TestCase extends BaseTestCase
     protected function destroyTestDbData()
     {
         $db = Yii::$app->getDb();
-        $db->createCommand()->dropTable('tb_queue')->execute();
+        $db->createCommand()->dropTable('tb_order')->execute();
     }
     protected function createTestDbData()
     {
-        Yii::$app->runAction('/migrate/up', ['migrationPath' => '@migrate']);
+        //Yii::$app->runAction('/migrate', ['migrationPath' => '@migrate']);
+        $db = Yii::$app->getDb();
+        try {
+            $db->createCommand()->createTable('tb_order', [
+                'id' => 'pk',
+                'sn' => "int(11) not null",
+                'game_id' => "int(11) not null",
+                'type' => "smallint(6) not null",
+                'user_id' => "int(100) not null",
+                'count' => "int(100) not null",
+                'hours' => "int(100) not null",
+                'final_price' => "float(100) not null",
+                'equipment' => "string(100) not null",
+                'serverinfo' => "string(100) not null",
+                'account' => "string(100) not null",
+                'remark' => "string(100)",
+                'status' => "smallint(6) not null",
+                'created_at' => "int(100) not null",
+                'updated_at' => "int(100) not null",
+                'start_time' => "datetime",
+                'end_time' => "datetime",
+                'payment_method' => "smallint(6) not null",
+                //'client_id' => "string(100) not null",
+                'name' => "string(255) not null",
+                //'description' => "string(100) not null",
+            ])->execute();
+        } catch (Exception $e) {
+            return;
+        }
     }
 }
