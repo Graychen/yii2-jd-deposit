@@ -84,5 +84,4 @@ class OrderDeposit extends Model
         $order->payment_method = Order::PAYMENT_METHOD_JD;
         return $order->save();
     }
-
 }
